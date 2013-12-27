@@ -12,6 +12,7 @@ function LazarilloCtrl($scope){
 	$scope.categorias = [];
 	$scope.cat=[];
 	$scope.geoStatus = "Desactivado";
+	$scope.idioma = "Castellano";
 
 	$scope.toggleGeolocalizar = function(){
 		if(data.geolocalizar){
@@ -21,6 +22,17 @@ function LazarilloCtrl($scope){
 		else{
 			data.geolocalizar = true;
 			$scope.geoStatus = "Activado";
+		}
+	}
+
+	$scope.toggleIdioma = function(){
+		if($scope.idioma == "Castellano"){
+				$scope.idioma = "English"
+				$data.idioma = "English"
+		}
+		else if($scope.idioma == "English"){
+				$scope.idioma = "Castellano"
+				$data.idioma = "Castellano"
 		}
 	}
 

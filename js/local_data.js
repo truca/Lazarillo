@@ -17,12 +17,13 @@
     data.ready = false;
     data.geolocalizar = false;
     data.id_tienda_descripcion = -1;
+    data.idioma = "Castellano";
 
     function toggleDescripcion(){
         $(".screen").addClass("inv");
         $("#descripcion").removeClass("inv");
     }
-    
+
     function setUserPosition(x,y){
         data.posicion = [x,y];
     }

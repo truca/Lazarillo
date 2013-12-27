@@ -2,7 +2,28 @@
 	<div>
 		<h2>Menu</h2>
 		<hr width="70%" align="left">
-		<h4 style="display: inline;">Geolocalizar:</h4>&nbsp; <button style="display: inline;" class="btn btn-primary" ng-click="toggleGeolocalizar()">{{geoStatus}}</button>
+		<table>
+			<tr>
+				<td><h4 style="display: inline;">Geolocalizar:</h4></td>
+				<td>
+					<button style="display: inline;" class="btn btn-primary" ng-click="toggleGeolocalizar()">{{geoStatus}}</button>
+				</td>
+			</tr>
+			<tr></tr>
+			<tr>
+				<td><h4 style="display: inline;">Lenguaje:</h4></td>
+				<td>
+					<button style="display: inline;" class="btn btn-primary" ng-click="toggleIdioma()">{{idioma}}</button>
+				</td>
+			</tr>
+			<tr></tr>
+			<tr>
+				<td><h4 style="display: inline;">Recordar Estacionamiento:</h4></td>
+				<td>
+					<button style="display: inline;" class="btn btn-primary" ng-click="toggleGeolocalizar()">Not yet Working</button>
+				</td>
+			</tr>
+		</table>
 	</div>
 
 	<div class="footer sticky-footer">
