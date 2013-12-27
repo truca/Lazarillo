@@ -1,0 +1,20 @@
+seleccionar posicion del estacionamiento
+seleccionar posicion del usuario
+
+agregar punto a ruta
+modificar orden de puntos en ruta
+eliminar punto en ruta
+
+mostrar informacion de PI
+
+
+icono para estacionamiento con drag
+posicion con drag?
+append a PI agregado
+servicios: FIFO
+
+
+rutas
+estacionamiento
+servicios
+mas
