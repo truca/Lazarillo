@@ -62,6 +62,16 @@ code {
   height: 100%;
 }
 
+.btn-footer-35{
+  width: 35%;
+  height: 100%; 
+}
+
+.btn-footer-30{
+  width: 30%;
+  height: 100%; 
+}
+
 /* Wrapper for page content to push down footer */
 #wrap {
   background: #A6C1FF;

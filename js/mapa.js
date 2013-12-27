@@ -96,35 +96,40 @@ function rapha(draw)
             
     function perfil_zona(codigo)//funcion que guarda de forma independiente cada zona del mapa
     {
-        var zona = caja.path("\""+codigo+"\"");
+        var zona = caja.path("\""+codigo.region+"\"");
+        var id = codigo.id;
         ubicacion.clear;
         zona.click(function(event) //reparar esto URGENTE
         {
+            viewDescription(id);
+
+
+            /*
             var bnds = event.target.getBoundingClientRect();
     
-	    	// adjust mouse x/y
-		    var mx = event.clientX - bnds.left;
-		    var my = event.clientY - bnds.top;
-		        
-		    // divide x/y by the bounding w/h to get location %s and apply factor by actual paper w/h
-		    var fx = mx/bnds.width * cuadro.attrs.width;
-		    var fy = my/bnds.height * cuadro.attrs.height;
+            // adjust mouse x/y
+            var mx = event.clientX - bnds.left;
+            var my = event.clientY - bnds.top;
+                
+            // divide x/y by the bounding w/h to get location %s and apply factor by actual paper w/h
+            var fx = mx/bnds.width * cuadro.attrs.width;
+            var fy = my/bnds.height * cuadro.attrs.height;
             data.posicion = [fx, fy];
             angular.element(angular.element($('body'))).scope().quitarVisitados();
-		    if (semaforo_rec_ubi)
-		    {
-		      	if(!flag)
-			    {
-			        posicion.remove();
-			        flag=true;
-			    }
+            if (semaforo_rec_ubi)
+            {
+                if(!flag)
+                {
+                    posicion.remove();
+                    flag=true;
+                }
 
-			    if(flag)
-			    {
-			        posicion = caja.circle(fx,fy,5).attr({fill: "blue"});
-			        flag = false;
-			    }      
-		    }        
+                if(flag)
+                {
+                    posicion = caja.circle(fx,fy,5).attr({fill: "blue"});
+                    flag = false;
+                }      
+            }     */   
         });
         bath.push(zona);
         bath.attr({'opacity': .5, fill:"#49796b"});
@@ -139,32 +144,32 @@ function rapha(draw)
 
         camino.click(function(event)
         {
-        	var bnds = event.target.getBoundingClientRect();
+            var bnds = event.target.getBoundingClientRect();
     
-		    // adjust mouse x/y
-		    var mx = event.clientX - bnds.left;
-		    var my = event.clientY - bnds.top;
-		        
-		    // divide x/y by the bounding w/h to get location %s and apply factor by actual paper w/h
-		    var fx = mx/bnds.width * cuadro.attrs.width;
-		    var fy = my/bnds.height * cuadro.attrs.height;
+            // adjust mouse x/y
+            var mx = event.clientX - bnds.left;
+            var my = event.clientY - bnds.top;
+                
+            // divide x/y by the bounding w/h to get location %s and apply factor by actual paper w/h
+            var fx = mx/bnds.width * cuadro.attrs.width;
+            var fy = my/bnds.height * cuadro.attrs.height;
             data.posicion = [fx, fy];
             angular.element(angular.element($('body'))).scope().quitarVisitados();
             if (semaforo_rec_ubi)
-		    {
-		      	if(!flag)
-			    {
-			        posicion.remove();
-			        flag=true;
-			    }
+            {
+                if(!flag)
+                {
+                    posicion.remove();
+                    flag=true;
+                }
 
-			    if(flag)
-			    {
-			        posicion = caja.circle(fx,fy,5).attr({fill: "blue"});
-			        flag = false;
+                if(flag)
+                {
+                    posicion = caja.circle(fx,fy,5).attr({fill: "blue"});
+                    flag = false;
                     recordar_ubi();
-			    }      
-		    }
+                }      
+            }
                
         });
         fath.push(camino);
@@ -190,34 +195,34 @@ function rapha(draw)
 
     cuadro.click(function(event,a,b) // esta funcion muesta un circulo verde de acuerdo a la posicion donde se haga click
     {
-    	var bnds = event.target.getBoundingClientRect();
+        var bnds = event.target.getBoundingClientRect();
     
-	    // adjust mouse x/y
-	var mx = event.clientX - bnds.left;
-	var my = event.clientY - bnds.top;
-	        
-	    // divide x/y by the bounding w/h to get location %s and apply factor by actual paper w/h
-	var fx = mx/bnds.width * cuadro.attrs.width;
-	var fy = my/bnds.height * cuadro.attrs.height;
+        // adjust mouse x/y
+    var mx = event.clientX - bnds.left;
+    var my = event.clientY - bnds.top;
+            
+        // divide x/y by the bounding w/h to get location %s and apply factor by actual paper w/h
+    var fx = mx/bnds.width * cuadro.attrs.width;
+    var fy = my/bnds.height * cuadro.attrs.height;
 
         data.posicion = [fx, fy];
         //LA LINEA COMENTADA DE ABAJO GENERA EL CONFLICTO
         //angular.element(angular.element($('body'))).scope().quitarVisitados();
-	if (semaforo_rec_ubi)
-	        {
-	        	if(!flag)
-		        {
-		            posicion.remove();
-		            flag=true;
-		        }
+    if (semaforo_rec_ubi)
+            {
+                if(!flag)
+                {
+                    posicion.remove();
+                    flag=true;
+                }
 
-		        if(flag)
-		        {
-		            posicion = caja.circle(fx,fy,5).attr({fill: "blue"});
-		            recordar_ubi();
-		            flag = false;
-		        }      
-	        }
+                if(flag)
+                {
+                    posicion = caja.circle(fx,fy,5).attr({fill: "blue"});
+                    recordar_ubi();
+                    flag = false;
+                }      
+            }
 
     });
           

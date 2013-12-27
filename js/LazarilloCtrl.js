@@ -33,6 +33,12 @@ function LazarilloCtrl($scope){
 		$scope.ajustarTamano();
 	});
 
+
+	$scope.toggleDescripcion = function(){
+		$scope.ajustarTamano();
+		$(".screen").addClass("inv");
+		$("#descripcion").removeClass("inv");
+	}
 	$scope.toggleConfig = function(){
 		$scope.ajustarTamano();
 		$(".screen").addClass("inv");
@@ -151,6 +157,20 @@ function LazarilloCtrl($scope){
 			$scope.setPosition(tienda, tienda.seleccionada);
 			$scope.addToRoute();
 		};
+
+		$scope.addFromDescription = function(){
+			tienda = _.filter($scope.tiendas, function(tienda){return tienda.id==data.id_tienda_descripcion})[0];
+			$scope.agregarARuta(tienda);
+			$scope.toggleMapa();
+		};
+
+		$scope.setUserPosition = function(){
+			tienda = _.filter(data.nodos["posicion"], function(tienda){ return tienda[0]==data.id_tienda_descripcion;});
+			setUserPosition(tienda[0][1][0],tienda[0][1][1]);
+			$scope.addToRoute();
+			$scope.draw();
+			$scope.toggleMapa();
+		}
 
 		$scope.quitarDeRuta = function(destino){
 			$scope.toggleVisitado(destino);

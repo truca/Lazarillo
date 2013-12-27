@@ -16,7 +16,27 @@
     data.svg.pisos = [];
     data.ready = false;
     data.geolocalizar = false;
+    data.id_tienda_descripcion = -1;
 
+    function toggleDescripcion(){
+        $(".screen").addClass("inv");
+        $("#descripcion").removeClass("inv");
+    }
+    
+    function setUserPosition(x,y){
+        data.posicion = [x,y];
+    }
+
+    function viewDescription(id){
+        data.id_tienda_descripcion = id;
+        tienda = _.filter(data.nodos["etiquetas"], function(pi){
+            return pi.id==id;
+        });
+
+        $("#nombre_desc").html(tienda[0].nombre);
+        $("#descripcion_desc").html(tienda[0].descripcion);
+        toggleDescripcion();
+    }
 
     function get_posiciones(){
         var nodos = [], reg =[];
@@ -50,7 +70,7 @@
         _.each(regiones, function(region){
             piso = {nivel: region[0]["NroNivel"], regiones: []} 
             _.each(region, function(reg){
-                piso.regiones.push(reg.Region);
+                piso.regiones.push({id:reg.IdNodo, region:reg.Region});
             });
             aux.push(piso);
         });

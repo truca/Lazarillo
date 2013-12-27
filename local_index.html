@@ -107,6 +107,48 @@
 				</div>
 			</div>
 		</div>
+		<div id="descripcion" class="screen inv"> 
+			<div>
+				<!--<img src="{{tienda.imagen}}">-->
+				<p><h4>Nombre</h4></p>
+				<span id="nombre_desc"></span>
+				<p><h4>Descripcion</h4></p>
+				<p id="descripcion_desc"></p>
+			</div>
+
+			<div class="footer sticky-footer">
+				<div class="container">
+					<div id="menu" class="btn-group col-xs-12 col-sm-12 col-md-12">
+						<button class="btn btn-footer-35 btn-primary" ng-click="toggleMapa()">
+							<i class="fa fa-reply"></i>
+						</button>
+						<button class="btn btn-footer-30 btn-primary" ng-click="setUserPosition()">
+							Posicionar aqui
+						</button>
+						<button class="btn btn-footer-35 btn-primary" ng-click="addFromDescription()">
+							Agregar a Ruta
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="config" class="screen inv"> 
+			<div>
+				<h2>Menu</h2>
+				<hr width="70%" align="left">
+				<h4 style="display: inline;">Geolocalizar:</h4>&nbsp; <button style="display: inline;" class="btn btn-primary" ng-click="toggleGeolocalizar()">{{geoStatus}}</button>
+			</div>
+
+			<div class="footer sticky-footer">
+				<div class="container">
+					<div id="menu" class="btn-group col-xs-12 col-sm-12 col-md-12">
+						<button class="btn btn-footer-100 btn-primary" ng-click="toggleMapa()">
+							<i class="fa fa-reply"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 	<img style="display:none;" src="http://www.lazarillo.cl/hito1/upload/images/uni.png">
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js"></script>
