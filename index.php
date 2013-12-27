@@ -22,7 +22,7 @@
 		<?php INCLUDE( 'partials/partial_ruta.php'); ?>
 		<?php INCLUDE( 'partials/partial_pi.php'); ?>
 		<?php INCLUDE( 'partials/partial_descripcion.php'); ?>
-		<?php INCLUDE( 'partials/partial_menu.php'); ?>
+		<?php INCLUDE( 'partials/partial_config.php'); ?>
 	</body>
 	<?php INCLUDE( 'partials/partial_scripts.php'); ?>
 </html>

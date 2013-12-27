@@ -33,10 +33,10 @@ function LazarilloCtrl($scope){
 		$scope.ajustarTamano();
 	});
 
-	$scope.toggleMenu = function(){
+	$scope.toggleConfig = function(){
 		$scope.ajustarTamano();
 		$(".screen").addClass("inv");
-		$("#menu").removeClass("inv");
+		$("#config").removeClass("inv");
 	}
 	$scope.togglePI = function(){
 		$scope.ajustarTamano();

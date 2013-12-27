@@ -17,6 +17,9 @@
     data.ready = false;
     data.geolocalizar = false;
 
+    function viewDescription(id){
+
+    }
 
     function get_posiciones(){
             var nodos = [], reg =[];
@@ -56,7 +59,7 @@
             _.each(regiones, function(region){
                 piso = {nivel: region[0]["NroNivel"], regiones: []} 
                 _.each(region, function(reg){
-                    piso.regiones.push(reg.Region);
+                    piso.regiones.push({id:reg.IdNodo, region:reg.Region});
                 });
                 aux.push(piso);
             });

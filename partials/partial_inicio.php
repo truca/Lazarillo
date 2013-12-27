@@ -11,7 +11,7 @@
 					<span class="glyphicon glyphicon-globe"></span>
 				</button>
 				<button class="btn btn-footer-25 btn-primary" onclick="recordar_ubi()">L</button>
-				<button class="btn btn-footer-25 btn-primary" ng-click="toggleMenu()">
+				<button class="btn btn-footer-25 btn-primary" ng-click="toggleConfig()">
 					<span class="glyphicon glyphicon-map-marker"></span>
 				</button>
 			</div>
