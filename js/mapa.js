@@ -81,8 +81,10 @@ function rapha(draw)
     zoom_in.toFront;
     zoom_out.toFront;*/
 
-    camb_niv_izq = caja.path("M 40 60, L 10 60, L 40 42.68, Z").attr({"title": "Bajar Nivel",'opacity': 1, fill: "black", "stroke-width": 1.5});
-    camb_niv_der = caja.path("M 60 60, L 90 60, L 60 42.68, Z").attr({"title": "subir Nivel",'opacity': 1, fill: "black", "stroke-width": 1.5});
+    camb_niv_izq = caja.path("M 40 60, L 10 60, L 40 42.68, Z").attr({"id": "izq","title": "Bajar Nivel",'opacity': 1, fill: "black", "stroke-width": 1.5}).data('id', 'izq');
+    camb_niv_izq.id = "izq";
+    camb_niv_der = caja.path("M 60 60, L 90 60, L 60 42.68, Z").attr({"id": "der","title": "Subir Nivel",'opacity': 1, fill: "black", "stroke-width": 1.5}).data('id', 'der');
+    camb_niv_der.id = "der";
     niv = caja.circle(40, 40, 10).attr({fill: "black", "stroke-width": 1.5});
     
     niv.translate(anchoimg/2 -40,altoimg-70);
@@ -253,6 +255,19 @@ function rapha(draw)
     if(draw.ruta.length > 0)
         dibujar_camino(draw.ruta);
     mostrar_pos();
+
+    //Eventos de cambio de nivel (las flechitas negras)
+    camb_niv_der.click(function(event)
+    {
+    	var thisPath = caja.getById("der");
+    	thisPath.attr("ng-click", "cambiarPiso('+')");
+    });
+
+    camb_niv_izq.click(function(event)
+    {
+    	var thisPath = caja.getById("izq");
+    	thisPath.attr("ng-click", "cambiarPiso('-')");
+    });
 }
 
 function obtener_geo() // funcion que se activa con el boton de georeferencia

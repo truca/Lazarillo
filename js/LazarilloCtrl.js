@@ -48,16 +48,25 @@ function LazarilloCtrl($scope){
 	});
 
 	$scope.cambiarPiso = function(symbol){
-		if(symbol == "+") 
-			if(pisoActual < data.pisos.length - 1){
-				pisoActual++;
+		console.log("cambio de piso");
+		if(symbol == "+"){ 
+			if($scope.pisoActual < data.pisos.length - 1){
+				$scope.pisoActual++;
 				$scope.draw();
+				if($scope.pisoActual < data.pisos.length - 1){
+					$("#subir").attr("disabled", "disabled");
+				}
 			}
-		else
-			if(pisoActual > 0){
-				pisoActual--;
+		}
+		else if(symbol == "-"){ 
+			if($scope.pisoActual > 0){
+				$scope.pisoActual--;
 				$scope.draw();
+				if($scope.pisoActual > 0){
+					$("#bajar").attr("disabled", "disabled");
+				}
 			}
+		}
 	};
 
 	$scope.toggleDescripcion = function(){

@@ -3,7 +3,7 @@
 	mysql_SELECT_db("tractorv_lazarillo", $con) or die(mysql_error());
 	mysql_query("SET NAMES 'utf8'");
 
-	$sql = "SELECT c.IdNodoA, IdNodoB, Direccion, IF(c.Peso = -1 ,
+	$sql = "SELECT c.IdNodoA, IdNodoB, (select NroNivel from Nodos where IdNodo=IdNodoA) as NroNivelA, (select NroNivel from Nodos where IdNodo=IdNodoB) as NroNivelB, Direccion, IF(c.Peso = -1 ,
 		(SQRT(POWER((SELECT X from Nodo where IdNodo = c.IdNodoB)-
 			(SELECT X from Nodo where IdNodo = c.IdNodoA),2)+
 				POWER((SELECT Y from Nodo where IdNodo = c.IdNodoB)-
