@@ -92,8 +92,8 @@
         return existe;
     }
 
-    function agregar_nodo(id_nodo){
-        data.nodos["adyacencia"].push([parseInt(id_nodo),[]]);
+    function agregar_nodo(id_nodo, piso_nodo){
+        data.nodos["adyacencia"].push([parseInt(id_nodo),[], parseInt(piso_nodo)]);
     }
 
     function agregar(id_nodo, camino){
@@ -104,12 +104,13 @@
 
     function agregar_adyacencia(adyacencia){
         nodo_a = adyacencia["IdNodoA"], nodo_b = adyacencia["IdNodoB"];
+        piso_a = adyacencia["NroNivelA"], piso_b = adyacencia["NroNivelB"];
         //verificar existencia de ambos nodos, sino agregar
         if(!existe(nodo_a))
-            agregar_nodo(nodo_a);
+            agregar_nodo(nodo_a, piso_a);
 
         if(!existe(nodo_b))
-            agregar_nodo(nodo_b);
+            agregar_nodo(nodo_b, piso_b);
         
         //buscar tipo de adyacencia
         agregar(nodo_a, [parseInt(nodo_b), parseFloat(adyacencia["PesoCamino"])]);
