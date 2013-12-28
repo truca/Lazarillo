@@ -1,8 +1,7 @@
     data = new Object();
     data.posicion = [500, 450];
     data.estacionamiento = [400, 300];
-    data.nombre_recinto = "Universidad1";
-    data.piso_actual = "0";
+    data.nombre_recinto = "Universidad";
     data.pisos = [];
     data.destinos = [];
     data.ruta = [];

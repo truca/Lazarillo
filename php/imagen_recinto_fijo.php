@@ -3,15 +3,16 @@
 	mysql_select_db("tractorv_lazarillo", $con) or die(mysql_error());
 	mysql_query("SET NAMES 'utf8'");
 
-	$sql = "SELECT NroNivel, IdNivel, Imagen FROM `Nivel` WHERE NombreRecinto= '".$_POST["recinto"]."'";
+	$sql = "SELECT Imagen FROM `Nivel` WHERE NombreRecinto= 'Universidad'";
+
+	//" AND NroNivel=".$_GET["piso"];
 
 	$q = mysql_query( $sql ) or die(mysql_error());
 	
 	$rows = array();
 	while($r = mysql_fetch_assoc($q)) {
-	    $rows[] = $r;
+	    echo '<img style="display:none;" src="'.$r['Imagen'].'">';
 	}
-	print json_encode($rows);
 
 	mysql_close ();
 ?>

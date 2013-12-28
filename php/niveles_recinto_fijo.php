@@ -3,7 +3,7 @@
 	mysql_select_db("tractorv_lazarillo", $con) or die(mysql_error());
 	mysql_query("SET NAMES 'utf8'");
 
-	$sql = "SELECT NroNivel, IdNivel FROM `Nivel` WHERE NombreRecinto= 'Universidad'";
+	$sql = "SELECT NroNivel, IdNivel, Imagen FROM `Nivel` WHERE NombreRecinto= 'Universidad'";
 
 	$q = mysql_query( $sql ) or die(mysql_error());
 	

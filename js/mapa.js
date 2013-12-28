@@ -75,6 +75,12 @@ function rapha(draw)
     zoom_in = caja.path("M22.646,19.307c0.96-1.583,1.523-3.435,1.524-5.421C24.169,8.093,19.478,3.401,13.688,3.399C7.897,3.401,3.204,8.093,3.204,13.885c0,5.789,4.693,10.481,10.484,10.481c1.987,0,3.839-0.563,5.422-1.523l7.128,7.127l3.535-3.537L22.646,19.307zM13.688,20.369c-3.582-0.008-6.478-2.904-6.484-6.484c0.006-3.582,2.903-6.478,6.484-6.486c3.579,0.008,6.478,2.904,6.484,6.486C20.165,17.465,17.267,20.361,13.688,20.369zM15.687,9.051h-4v2.833H8.854v4.001h2.833v2.833h4v-2.834h2.832v-3.999h-2.833V9.051z").attr({"title": "Acercarse", 'opacity': 1, fill: "hsb(.6, .75, .75)", "stroke-width": 1.5});
 
     zoom_out = caja.path("M22.646,19.307c0.96-1.583,1.523-3.435,1.524-5.421C24.169,8.093,19.478,3.401,13.688,3.399C7.897,3.401,3.204,8.093,3.204,13.885c0,5.789,4.693,10.481,10.484,10.481c1.987,0,3.839-0.563,5.422-1.523l7.128,7.127l3.535-3.537L22.646,19.307zM13.688,20.369c-3.582-0.008-6.478-2.904-6.484-6.484c0.006-3.582,2.903-6.478,6.484-6.486c3.579,0.008,6.478,2.904,6.484,6.486C20.165,17.465,17.267,20.361,13.688,20.369zM8.854,11.884v4.001l9.665-0.001v-3.999L8.854,11.884z").attr({"title": "Alejarse",'opacity': 1, fill: "hsb(.6, .75, .75)", "stroke-width": 1.5});
+    
+    zoom_out.translate(1,41);
+    zoom_in.translate(1,1);
+    zoom_in.toFront;
+    zoom_out.toFront;*/
+
     camb_niv_izq = caja.path("M 40 60, L 10 60, L 40 42.68, Z").attr({"title": "Bajar Nivel",'opacity': 1, fill: "black", "stroke-width": 1.5});
     camb_niv_der = caja.path("M 60 60, L 90 60, L 60 42.68, Z").attr({"title": "subir Nivel",'opacity': 1, fill: "black", "stroke-width": 1.5});
     niv = caja.circle(40, 40, 10).attr({fill: "black", "stroke-width": 1.5});
@@ -83,10 +89,7 @@ function rapha(draw)
     camb_niv_der.translate(anchoimg/2 - 20,altoimg-80);
     camb_niv_izq.translate(anchoimg/2 - 80,altoimg-80);
 
-    zoom_out.translate(1,41);
-    zoom_in.translate(1,1);
-    zoom_in.toFront;
-    zoom_out.toFront;*/
+    
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,7 +189,7 @@ function rapha(draw)
                  modo = "L"; // El primero es M, el resto son L.
             caminos.push([modo, arreglo[i][0], arreglo[i][1]]); // va agregando cada coordenada al path, cuando termine, tendrá el path de todo el camino
         }
-        ruta_optima = caja.path(caminos).attr({stroke: "red", "stroke-width": 3});
+        ruta_optima = caja.path(caminos).attr({stroke: "#34c6cd", "stroke-width": 5});
         //ruta_optima.click(function(){
         //ruta_optima.remove(); // remueve todo
         //});

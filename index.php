@@ -25,4 +25,5 @@
 		<?php INCLUDE( 'partials/partial_config.php'); ?>
 	</body>
 	<?php INCLUDE( 'partials/partial_scripts.php'); ?>
+	<?php INCLUDE( 'php/imagen_recinto.php' ) ?>
 </html>

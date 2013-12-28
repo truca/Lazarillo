@@ -41,26 +41,40 @@ function LazarilloCtrl($scope){
 	}
 	$scope.ajustarTamano();
 
+	$(document).ready($scope.ajustarTamano());
+
 	$(window).resize(function(){
 		$scope.ajustarTamano();
 	});
 
+	$scope.cambiarPiso = function(symbol){
+		if(symbol == "+") 
+			if(pisoActual < data.pisos.length - 1){
+				pisoActual++;
+				$scope.draw();
+			}
+		else
+			if(pisoActual > 0){
+				pisoActual--;
+				$scope.draw();
+			}
+	};
 
 	$scope.toggleDescripcion = function(){
 		$scope.ajustarTamano();
 		$(".screen").addClass("inv");
 		$("#descripcion").removeClass("inv");
-	}
+	};
 	$scope.toggleConfig = function(){
 		$scope.ajustarTamano();
 		$(".screen").addClass("inv");
 		$("#config").removeClass("inv");
-	}
+	};
 	$scope.togglePI = function(){
 		$scope.ajustarTamano();
 		$(".screen").addClass("inv");
 		$("#pi").removeClass("inv");
-	}
+	};
 	$scope.toggleMapa = function(){
 		$scope.ajustarTamano();
 		$(".screen").addClass("inv");
