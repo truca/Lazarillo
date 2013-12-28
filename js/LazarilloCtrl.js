@@ -130,8 +130,13 @@ function LazarilloCtrl($scope){
 		draw = {};
 		draw.regiones = data.svg.pisos[$scope.pisoActual]["regiones"]; 
 		$("#wrap").html("");
-		draw.caminos = [];//data.svg.pisos[$scope.pisoActual]["caminos"];
-		if($scope.trayectoria.length > 0)
+		draw.caminos = [];
+
+		
+		var node = _.filter(data.nodos["adyacencia"], function(nodo){return nodo[0]==$scope.ruta[0]});
+		
+	  if($scope.trayectoria.length > 0 && 
+			node !== undefined && node[0][2]==parseInt(data.pisos[$scope.pisoActual].NroNivel))
 			draw.ruta = ruta_a_posiciones(ruta_al_siguiente($scope.ruta[0], $scope.trayectoria));
 		else 
 			draw.ruta = [];
