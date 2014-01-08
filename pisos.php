@@ -26,7 +26,7 @@
 				while($r = mysql_fetch_assoc($q)) {
 					echo "<tr><td>";
 				  echo $r["NroNivel"];
-				  echo '</td><td><a href="http://www.tractorverde.cl/lazarillo-responsive/index.html?recinto='.$_GET["recinto"].'&piso='.$r["NroNivel"].'" class="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i></a></td></tr>';
+				  echo '</td><td><a href="http://www.tractorverde.cl/lazarillo-responsive/index.php?recinto='.$_GET["recinto"].'&piso='.$r["NroNivel"].'" class="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i></a></td></tr>';
 				}
 
 				mysql_close ();

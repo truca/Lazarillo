@@ -39,9 +39,26 @@ function LazarilloCtrl($scope){
 	$scope.ajustarTamano = function(){
 		$(".wrap").height($("body").height()-60);
 	}
-	$scope.ajustarTamano();
 
-	$(document).ready($scope.ajustarTamano());
+	$scope.setEstacionamiento = function(){
+		data.setEstacionamiento = true;
+		setTimeout(function(){
+			alert("Seleccione Posicion del Estacionamiento");
+		}, 500);
+		$scope.toggleMapa();
+	};
+
+	var resize = setInterval(function(){
+		$scope.ajustarTamano();
+	}, 500);
+
+	var redraw = setInterval(function(){
+		if(data.redraw){
+			data.redraw = false;
+			$scope.actualizarRuta($scope.ruta);
+			$scope.draw();
+		}
+	}, 200);	
 
 	$(window).resize(function(){
 		$scope.ajustarTamano();
@@ -131,14 +148,22 @@ function LazarilloCtrl($scope){
 		draw.regiones = data.svg.pisos[$scope.pisoActual]["regiones"]; 
 		$("#wrap").html("");
 		draw.caminos = [];
-
+		/*if($scope.ruta.length > 0){
+			draw.trayectoria = ruta_a_posiciones(
+				obtener_ruta(1, $scope.ruta, adyacente_usuario(data.posicion,data.nodos["posicion"],data.nodos["PT"],data.pisos[data.pisoActual])));
+			draw.pi = ruta_a_posiciones($scope.ruta);
+		}*/
 		
-		var node = _.filter(data.nodos["adyacencia"], function(nodo){return nodo[0]==$scope.ruta[0]});
+		var node = _.filter(data.nodos["adyacencia"], function(nodo){
+			return nodo[0]==$scope.ruta[0];
+		});
 		
 	  if($scope.trayectoria.length > 0 && 
-			node !== undefined && node[0][2]==parseInt(data.pisos[$scope.pisoActual].NroNivel))
+			node !== undefined && node[0] !== undefined && node[0][2]==parseInt(data.pisos[$scope.pisoActual].NroNivel))
 			draw.ruta = ruta_a_posiciones(ruta_al_siguiente($scope.ruta[0], $scope.trayectoria));
-		else 
+		else if($scope.ruta[0]==-2){
+			draw.ruta = $scope.trayectoria;
+		}else 
 			draw.ruta = [];
 		rapha(draw);
 	}
@@ -233,6 +258,7 @@ function LazarilloCtrl($scope){
         get_puntos_transicion();
         get_adyacentes();
      		var draw_mapa = setInterval(function(){
+     			$scope.ajustarTamano();
      			$scope.draw();
      			clearInterval(draw_mapa);
      		}, 500);  

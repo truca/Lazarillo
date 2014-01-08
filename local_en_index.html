@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Lazarillo">
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="LazarilloApp">
+		<meta name="author" content="LazarilloTeam">
+		<link rel="shortcut icon" href="http://getbootstrap.com/docs-assets/ico/favicon.png">
+		<link href="css/font-awesome.css" rel="stylesheet">
+
+		<title>Lazarillo</title>
+
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/custom.css" rel="stylesheet">
+	</head>
+	<body style="" ng-controller="LazarilloCtrl">
+		<div id="mapa" class="screen"> 
+			<div style="height: 35px; width: 150px; z-index: 999999; position: absolute;margin-left: 50%;left: -75px;bottom: 70px;">
+				<div class="btn-group">
+				  <button id="bajar" type="button" ng-click="cambiarPiso('-')" class="btn btn-default">Down</button>
+				  <button type="button" disabled class="btn btn-default">{{pisoActual}}</button>
+				  <button id="subir" type="button" ng-click="cambiarPiso('+')" class="btn btn-default">Up</button>
+				</div>
+			</div>
+
+			<div id="wrap" class="wrap">
+				<div style="position: relative; left:50%; top:50%; margin-left:-25px; margin-top:-25px;">
+					<img src="img/loading.gif">
+					Loading..
+				</div>
+			</div>
+
+			<div class="footer">
+				<div class="container">
+					<div id="menu" class="btn-group col-xs-12 col-sm-12 col-md-12">
+						<button class="btn btn-footer-25 btn-primary" ng-click="toggleRuta()">
+							<span class="glyphicon glyphicon-road"></span>
+						</button>
+						<button class="btn btn-footer-25 btn-primary" ng-click="toggleRutas()">
+							<span class="glyphicon glyphicon-globe"></span>
+						</button>
+						<button class="btn btn-footer-25 btn-primary" onclick="recordar_ubi()">L</button>
+						<button class="btn btn-footer-25 btn-primary" ng-click="toggleConfig()">
+							<span class="glyphicon glyphicon-map-marker"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="pi" class="screen inv">
+			<div class="wrap2">
+				<div class="searchContainer">
+					<input style="position: relative; top: 6px; padding: 3px; margin-right: 3px;" class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-xs-9 col-sm-9 col-md-9" type="text" ng-model="categorySearch">&nbsp;&nbsp;
+					<button style="position: relative; top: 4px;" class="btn btn-info col-xs-1 col-sm-1 col-md-1">
+						<i class="fa fa-search"></i>
+					</button>
+				</div>
+				<div>
+					<div ng-repeat="categoria in categorias | filter:categorySearch:strict">
+						<h3>{{categoria}}</h3>
+						<hr width="70%" align="left">
+						<table style="text-align: center;" class="col-xs-12 col-sm-12 col-md-12 table table-bordered table-striped" class="tabla_tiendas">
+							<tr ng-repeat="tienda in tiendas | filter:{agregada: 'false'} | filterByCategory:categoria"> 
+								<td class="col-xs-4 col-sm-4 col-md-4 tienda-{{tienda.seleccionada}}">
+									<button class="btn btn-primary" ng-click="agregarARuta(tienda)"><i class="fa fa-plus"></i></button>
+								</td>
+								<td style="vertical-align: middle;" class="col-xs-8 col-sm-8 col-md-8 tienda-{{tienda.seleccionada}}">{{tienda.nombre}}</td>
+							</tr>
+						</table>
+					</div>  
+				</div>
+			</div>
+
+			<div class="footer sticky-footer">
+				<div class="container">
+					<div id="menu" class="btn-group col-xs-12 col-sm-12 col-md-12">
+						<button class="btn btn-footer-100 btn-primary" ng-click="toggleRuta()">
+							<i class="fa fa-reply"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="ruta" class="screen inv">
+			<div class="wrap">
+				<div>
+					<table style="text-align: center;" class="col-xs-12 col-sm-12 col-md-12 table table-bordered table-striped" id="tabla_tiendas">
+						<tr>
+							<th style="text-align: center;" class="col-xs-4 col-sm-4 col-md-4">Visited</th>
+							<th style="text-align: center;" class="col-xs-4 col-sm-4 col-md-4">Name</th>
+						</tr>
+						<tr ng-repeat="destino in destinos | filter: {visitado: false} | orderBy: ['posicion']">
+							<td class="destino-{{destino.seleccionada}}">
+								<button class="btn btn-primary" ng-click="quitarDeRuta(destino)"><i class="fa fa-times"></i></button>
+							</td>
+							<td class="destino-{{destino.seleccionada}}">{{destino.nombre}}</td>
+						</tr>
+					</table>
+					<button class="btn btn-footer-100 btn-primary" ng-click="togglePI()">
+						<i class="fa fa-plus"></i>&nbsp;&nbsp;Add Interest Point
+					</button>
+				</div>
+			</div>
+
+			<div class="footer">
+				<div class="container">
+					<div id="menu" class="btn-group col-xs-12 col-sm-12 col-md-12">
+						<button class="btn btn-footer-100 btn-primary" ng-click="toggleMapa()">
+								<i class="fa fa-reply"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="descripcion" class="screen inv"> 
+			<div>
+				<!--<img src="{{tienda.imagen}}">-->
+				<p><h4>Name</h4></p>
+				<span id="nombre_desc"></span>
+				<p><h4>Description</h4></p>
+				<p id="descripcion_desc"></p>
+			</div>
+
+			<div class="footer sticky-footer">
+				<div class="container">
+					<div id="menu" class="btn-group col-xs-12 col-sm-12 col-md-12">
+						<button class="btn btn-footer-35 btn-primary" ng-click="toggleMapa()">
+							<i class="fa fa-reply"></i>
+						</button>
+						<button class="btn btn-footer-30 btn-primary" ng-click="setUserPosition()">
+							Position here
+						</button>
+						<button class="btn btn-footer-35 btn-primary" ng-click="addFromDescription()">
+							Add to route
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="config" class="screen inv"> 
+			<div>
+				<h2>Menu</h2>
+				<hr width="70%" align="left">
+				<table>
+					<tr>
+						<td><h4 style="display: inline;">Georeference:</h4></td>
+						<td>
+							<button style="display: inline;" class="btn btn-primary" ng-click="toggleGeolocalizar()">{{geoStatus}}</button>
+						</td>
+					</tr>
+					<tr>
+						<td><h4 style="display: inline;">Languaje:</h4></td>
+						<td>
+							<button style="display: inline;" class="btn btn-primary" ng-click="toggleIdioma()">{{idioma}}</button>
+						</td>
+					</tr>
+					<tr>
+						<td><h4 style="display: inline;">Remind parking:</h4></td>
+						<td>
+							<button style="display: inline;" class="btn btn-primary" ng-click="setEstacionamiento()">Remember</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="footer sticky-footer">
+				<div class="container">
+					<div id="menu" class="btn-group col-xs-12 col-sm-12 col-md-12">
+						<button class="btn btn-footer-100 btn-primary" ng-click="toggleMapa()">
+							<i class="fa fa-reply"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<img style="display:none;" src="http://www.lazarillo.cl/hito1/upload/images/uni.png">
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js"></script>
+	<script type="text/javascript" src="js/LazarilloCtrl.js"></script>
+	<script src="js/jquery-2.0.3.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/raphael.js"></script>
+	<script type="text/javascript" src="js/jquery-2.0.3.js"></script>
+	<!--<script type="text/javascript" src="js/data.js"></script>-->
+	<script type="text/javascript" src="js/local_data.js"></script>
+	<script type="text/javascript" src="js/underscore-min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/mapa.js"></script>
+	<script type="text/javascript" src="js/scriptcaminos.js"></script>
+	<script type="text/javascript" src="js/scriptprecision.js"></script>
+</html>

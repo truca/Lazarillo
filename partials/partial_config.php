@@ -6,21 +6,23 @@
 			<tr>
 				<td><h4 style="display: inline;">Geolocalizar:</h4></td>
 				<td>
-					<button style="display: inline;" class="btn btn-primary" ng-click="toggleGeolocalizar()">{{geoStatus}}</button>
+					<button class="btn btn-primary" ng-click="toggleGeolocalizar()">{{geoStatus}}</button>
 				</td>
 			</tr>
 			<tr></tr>
 			<tr>
 				<td><h4 style="display: inline;">Lenguaje:</h4></td>
 				<td>
-					<button style="display: inline;" class="btn btn-primary" ng-click="toggleIdioma()">{{idioma}}</button>
+					<a class="btn btn-primary" 
+					href=<?php echo "\"http://www.tractorverde.cl/lazarillo-responsive/index_en.php?recinto=".$_GET["recinto"]."&piso=".$_GET["piso"]."\""; ?>
+					ng-click="toggleIdioma()">{{idioma}}</a>
 				</td>
 			</tr>
 			<tr></tr>
 			<tr>
 				<td><h4 style="display: inline;">Recordar Estacionamiento:</h4></td>
 				<td>
-					<button style="display: inline;" class="btn btn-primary" ng-click="toggleGeolocalizar()">Not yet Working</button>
+					<button class="btn btn-primary" ng-click="setEstacionamiento()">Recordar</button>
 				</td>
 			</tr>
 		</table>

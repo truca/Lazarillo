@@ -52,8 +52,11 @@ function rapha(draw)
         return 0;
     }*/
     
-    var caminos = draw.caminos;
-    var zonass = draw.regiones;
+    var caminos = draw.caminos; // codigos svg de lso caminos del mapa
+    var zonass = draw.regiones; // codigos svg de las regiones del mapa
+    var pi = draw.pi; // ubicacion de los pi
+    var trayectoria = draw.trayectoria; // codigo de la trayectoria
+    var ruta = draw.ruta // ruta seleccionada
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     var ancho=$("#wrap").width();
     var alto= $("#wrap").height();
@@ -80,16 +83,16 @@ function rapha(draw)
     zoom_in.translate(1,1);
     zoom_in.toFront;
     zoom_out.toFront;*/
-
+    /*
     camb_niv_izq = caja.path("M 40 60, L 10 60, L 40 42.68, Z").attr({"id": "izq","title": "Bajar Nivel",'opacity': 1, fill: "black", "stroke-width": 1.5}).data('id', 'izq');
     camb_niv_izq.id = "izq";
     camb_niv_der = caja.path("M 60 60, L 90 60, L 60 42.68, Z").attr({"id": "der","title": "Subir Nivel",'opacity': 1, fill: "black", "stroke-width": 1.5}).data('id', 'der');
     camb_niv_der.id = "der";
     niv = caja.circle(40, 40, 10).attr({fill: "black", "stroke-width": 1.5});
     
-    niv.translate(anchoimg/2 -40,altoimg-70);
+    niv.translate(anchoimg/2 -40,altoimg-70);*
     camb_niv_der.translate(anchoimg/2 - 20,altoimg-80);
-    camb_niv_izq.translate(anchoimg/2 - 80,altoimg-80);
+    camb_niv_izq.translate(anchoimg/2 - 80,altoimg-80);*/
 
     
 
@@ -180,18 +183,26 @@ function rapha(draw)
         fath.push(camino);
     }
 
-    function dibujar_camino(arreglo) // Esta funcion dibuja el camino optimo. Se le entrega un arreglo con los nodos a visitar, la posicion x y la posicion y del visitante. Esta funcion retorna la ubicacion del visitante.
+    function dibujar_camino(arreglo, color, modo) // Esta funcion dibuja el camino optimo. Se le entrega un arreglo con los nodos a visitar, la posicion x y la posicion y del visitante. Esta funcion retorna la ubicacion del visitante.
     {
         //arreglo.unshift([x_visitante,y_visitante]);
         var caminos = [];
         var modo = "M";
         for(var i=0;i<arreglo.length;i++)
-        {
+        {   
             if(i==1)
-                 modo = "L"; // El primero es M, el resto son L.
+                modo = "L"; // El primero es M, el resto son L.
             caminos.push([modo, arreglo[i][0], arreglo[i][1]]); // va agregando cada coordenada al path, cuando termine, tendrá el path de todo el camino
         }
+
         ruta_optima = caja.path(caminos).attr({stroke: "#34c6cd", "stroke-width": 5});
+        if (modo)
+        {
+            posicion_inicial = caja.circle(arreglo[0][0], arreglo[0][1],12).attr({fill: "#32cc12"});
+            //texto_inicial = caja.text(arreglo[0][0], arreglo[0][1], "A").attr({font:'20px Verdana','font-size':20});
+            posicion_final = caja.circle(arreglo[arreglo.length-1][0], arreglo[arreglo.length-1][1],12).attr({fill: "#32cc12"});
+            //texto_final = caja.text(arreglo[arreglo.length-1][0], arreglo[arreglo.length-1][1], "B").attr({font:'20px Verdana','font-size':20});
+        }
         //ruta_optima.click(function(){
         //ruta_optima.remove(); // remueve todo
         //});
@@ -203,34 +214,64 @@ function rapha(draw)
         var bnds = event.target.getBoundingClientRect();
     
         // adjust mouse x/y
-    var mx = event.clientX - bnds.left;
-    var my = event.clientY - bnds.top;
-            
-        // divide x/y by the bounding w/h to get location %s and apply factor by actual paper w/h
-    var fx = mx/bnds.width * cuadro.attrs.width;
-    var fy = my/bnds.height * cuadro.attrs.height;
+        var mx = event.clientX - bnds.left;
+        var my = event.clientY - bnds.top;
+                
+            // divide x/y by the bounding w/h to get location %s and apply factor by actual paper w/h
+        var fx = mx/bnds.width * cuadro.attrs.width;
+        var fy = my/bnds.height * cuadro.attrs.height;
 
-        data.posicion = [fx, fy];
-        //LA LINEA COMENTADA DE ABAJO GENERA EL CONFLICTO
-        //angular.element(angular.element($('body'))).scope().quitarVisitados();
-    if (semaforo_rec_ubi)
-            {
-                if(!flag)
+        if(data.setEstacionamiento)
+        {
+            data.estacionamiento = [fx, fy];
+            data.setEstacionamiento = false;
+        }
+        else
+            data.posicion = [fx, fy];
+
+            //LA LINEA COMENTADA DE ABAJO GENERA EL CONFLICTO
+            //angular.element(angular.element($('body'))).scope().quitarVisitados();
+        if (semaforo_rec_ubi)
                 {
-                    posicion.remove();
-                    flag=true;
+                    if(!flag)
+                    {
+                        posicion.remove();
+                        flag=true;
+                    }
+
+                    if(flag)
+                    {
+                        posicion = caja.circle(fx,fy,12).attr({fill: "blue"});
+                        recordar_ubi();
+                        flag = false;
+                    }      
                 }
-
-                if(flag)
-                {
-                    posicion = caja.circle(fx,fy,5).attr({fill: "blue"});
-                    recordar_ubi();
-                    flag = false;
-                }      
-            }
+        data.redraw=true;
 
     });
-          
+
+    posicion = caja.circle(data.estacionamiento[0],data.estacionamiento[1],12).attr({fill: "blue"});
+    
+    function mostrar_pi(arreglo, color) // Esta funcion dibuja el camino optimo. Se le entrega un arreglo con los nodos a visitar, la posicion x y la posicion y del visitante. Esta funcion retorna la ubicacion del visitante.
+    {
+        //arreglo.unshift([x_visitante,y_visitante]);
+        var posiciones = [];
+        for(var i=0;i<arreglo.length;i++)
+        {   
+            posicion = caja.circle(arreglo[i][0], arreglo[i][1],12).attr({fill: "#32cc12"});
+        }
+        posiciones.push(posicion);
+        /*
+        posicion_inicial = caja.circle(arreglo[0][0], arreglo[0][1],12).attr({fill: "#32cc12"});
+        texto_inicial = caja.text(arreglo[0][0], arreglo[0][1], "A").attr({font:'20px Verdana','font-size':20});
+        posicion_final = caja.circle(arreglo[arreglo.length-1][0], arreglo[arreglo.length-1][1],12).attr({fill: "#32cc12"});
+        texto_final = caja.text(arreglo[arreglo.length-1][0], arreglo[arreglo.length-1][1], "B").attr({font:'20px Verdana','font-size':20});
+        texto_final.toFront;*/
+        //ruta_optima.click(function(){
+        //ruta_optima.remove(); // remueve todo
+        //});
+    }
+
 
     function mostrar_caminos(caminos)
     {
@@ -252,22 +293,18 @@ function rapha(draw)
     
     mostrar_zonas(zonass);
     mostrar_caminos(caminos);
-    if(draw.ruta.length > 0)
-        dibujar_camino(draw.ruta);
+
+    if ( draw.trayectoria != null && draw.trayectoria.length > 0) // falta que duende habilite draw. trayectoria y draw.pi
+    {
+        mostrar_pi(pi, "#f50808");
+        dibujar_camino(trayectoria,"#e12222", false);
+        if(ruta.length > 0)
+            dibujar_camino(ruta,"#21cb06",true);
+    }
+    if(ruta.length > 0)
+            dibujar_camino(ruta,"#21cb06",true);
+   
     mostrar_pos();
-
-    //Eventos de cambio de nivel (las flechitas negras)
-    camb_niv_der.click(function(event)
-    {
-    	var thisPath = caja.getById("der");
-    	thisPath.attr("ng-click", "cambiarPiso('+')");
-    });
-
-    camb_niv_izq.click(function(event)
-    {
-    	var thisPath = caja.getById("izq");
-    	thisPath.attr("ng-click", "cambiarPiso('-')");
-    });
 }
 
 function obtener_geo() // funcion que se activa con el boton de georeferencia

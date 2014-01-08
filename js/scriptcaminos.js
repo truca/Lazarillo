@@ -1,3 +1,69 @@
+function grafo_pos_punto_ruta(grafo_posiciones,grafo_etiquetas)
+{
+var subgrafo=new Array();
+var tam=grafo_posiciones.length;
+var tam2=grafo_etiquetas.length;
+var marca;
+var indice_aux=0;
+for(var i=0;i<tam;i++)
+{
+	marca=0;
+	for(var j=0;j<tam2;j++)
+	{
+		if(grafo_posiciones[i][0]==grafo_etiquetas[j]["id"])//si estamos viendo un nodo de interes
+		{
+		marca=1;//si es nodo de interes
+		j=tam2;//no seguimos buscando
+		}
+	}
+	if(marca==0)//si no es un nodo de interes
+	{
+	subgrafo[indice_aux]=new Array();
+	subgrafo[indice_aux][0]=grafo_posiciones[i][0];
+	subgrafo[indice_aux][1]=new Array();
+    copiar_arreglo(subgrafo[indice_aux][1],grafo_posiciones[i][1]);
+	indice_aux=indice_aux+1;
+	}
+}
+return subgrafo;
+}
+
+
+
+function parsear_ruta_por_nivel(ruta,grafo)
+{
+ruta_nivel_actual=new Array();
+ruta_nivel_actual[0]=ruta[0];
+var actual=grafo[0][2];
+var tam=ruta.length;
+
+	for(var i=1;i<tam;i++)
+	{
+	if(actual==_.find(grafo, function(pos){ return pos[0]==ruta[i]})[2])//si sigue estando en el mismo piso
+		{
+		ruta_nivel_actual[i]=ruta[i];
+		//console.log("pepe "+i);
+		//console.log("actual="+actual);
+		}else
+		{
+		return ruta_nivel_actual;
+		}
+	}
+	return ruta_nivel_actual;
+}
+
+function uniqueArray( myArr ) {
+  var r = [];
+  o : for( var i = 0, n = myArr.length; i < n; i++ ){
+    for( var x = 0, y = r.length; x < y; x++ ){
+      if( r[ x ] == myArr[ i ] ){
+        continue o;
+      }
+    }
+    if( !!myArr[ i ] ) r[ r.length ] = myArr[ i ];
+  }
+  return r;
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //	FUNCION(PRINCIPAL):	entrega la ruta a seguir, si se desea respetar el orden o si se desea 	//
 //						el recorrido optimo														//
@@ -103,7 +169,7 @@ var tam=nodos.length-1;
 	
 	caminos=dijkstra(grafo,adyacentes_actual);//calculamos los caminos y los nodos para llegar al actual
 	copiar_arreglo(ruta,caminos[posicion_camino_dijkstra(nodos[0],caminos)][2]);//guardamos la ruta desde el actual al primer elemento
-	console.log("GUARDE EL PRIMERO");
+	//console.log("GUARDE EL PRIMERO");
 	for(var i=0;i<tam;i++)
 	{
 	lista_ady_actual=lista_adyacentes(nodos[i],grafo);//guardamos la lista de adyacentes al actual
@@ -173,7 +239,7 @@ var tam=grafo.length;
 		return lista;
 		}
 	}
-	console.log("arroje error");
+	//console.log("arroje error");
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,13 +460,13 @@ texto="Vector[TAM:"+tam+"]={";
 	}
 texto=texto+vector[i]+"}";
 
-console.log(texto);
+//console.log(texto);
 }
 
 //*****retorna el id del nodo mas cercano a las coordenadas señaladas
 function nodo_distancia_menor(coord,grafo_posiciones)
 {
-console.log("nodo_dist_menor:entre");
+//console.log("nodo_dist_menor:entre");
 var tam=grafo_posiciones.length;
 var id_nodo=grafo_posiciones[0][0];//guardamos el id del primer elemento del grafo
 var menor=distancia_punto_punto(grafo_posiciones[0][1],coord);//guardamos la distancia del punto actual al primer elemento del grafo
@@ -408,21 +474,21 @@ var aux;
 
 	for(var i=1; i<tam; i++)
 	{
-	console.log("Variable id_nodo="+id_nodo);
-	console.log("Variable menor="+menor);
-	console.log("nodo_dist_menor:entre al for");
+	//console.log("Variable id_nodo="+id_nodo);
+	//console.log("Variable menor="+menor);
+	//console.log("nodo_dist_menor:entre al for");
 	aux=distancia_punto_punto(grafo_posiciones[i][1],coord);//guardamos la distancia del punto actual al i-esimo elemento del grafo
-		console.log(aux+"<"+menor);
+		//console.log(aux+"<"+menor);
 		if(aux<menor)
 			{
-			console.log("nodo_dist_menor:entre al if");
+			//console.log("nodo_dist_menor:entre al if");
 			menor=aux;
 			id_nodo=grafo_posiciones[i][0];//guardamos el id del i-esimo elemento del grafo
 			}
-		console.log("nodo_dist_menor:pase el if");
+		//console.log("nodo_dist_menor:pase el if");
 	}
-	console.log("nodo_dist_menor:sali del for");
-	console.log("nodo_dist_menor:sali");
+	//console.log("nodo_dist_menor:sali del for");
+	//console.log("nodo_dist_menor:sali");
 	return id_nodo;
 }
 
@@ -442,11 +508,11 @@ return adyacente;
 //*****Grafo auxiliar que incluye el pi
 function grafo_pi(grafo,grafo_posiciones,coord)
 {
-console.log("GRAFO_PI");
-console.log("Parametros recibidos");
-console.log(grafo);
-console.log(grafo_posiciones);
-console.log(coord);
+//console.log("GRAFO_PI");
+//console.log("Parametros recibidos");
+//console.log(grafo);
+//console.log(grafo_posiciones);
+//console.log(coord);
 
 var id_nodo=nodo_distancia_menor(coord,grafo_posiciones);//guardamos el id del nodo mas cercando al pi
 var tam=grafo.length;
@@ -455,33 +521,33 @@ var grafo_aux= new Array();
 var aux;
 	for(var i=0;i<tam;i++)
 	{
-	console.log("for 1: i="+i+", "+i+"<"+tam);
+	//console.log("for 1: i="+i+", "+i+"<"+tam);
 	grafo_aux[i]=new Array();
 	grafo_aux[i][0]=grafo[i][0];//guardamos el id actual
 	subtam=grafo[i][1].length;//guardamos la cantidad de adyacentes
 	grafo_aux[i][1]=new Array();
 		for(var j=0;j<subtam;j++)//copiamos todos los adyacentes al nodo actual
 		{
-		console.log("for 2: j="+j+", "+j+"<"+subtam);
+		//console.log("for 2: j="+j+", "+j+"<"+subtam);
 		grafo_aux[i][1][j]=new Array();
-		console.log(grafo[i][1][j]);
+		//console.log(grafo[i][1][j]);
 		copiar_arreglo(grafo_aux[i][1][j],grafo[i][1][j]);//copiamos el j-esimo adyacente al i-esimo adyacente del grafo
-		console.log("Copiamos");
-		console.log(grafo_aux[i][1][j]);
+		//console.log("Copiamos");
+		//console.log(grafo_aux[i][1][j]);
 		}
-		console.log("grafo_aux:");
-		console.log(grafo_aux);
-		console.log("if("+id_nodo+"=="+grafo_aux[i][0]+")");
+		//console.log("grafo_aux:");
+		//console.log(grafo_aux);
+		//console.log("if("+id_nodo+"=="+grafo_aux[i][0]+")");
 		if(id_nodo==grafo_aux[i][0])//si este es el nodo adyacente mas cercando a la posicion 
 			{
 			aux=grafo_aux[i][1].length;
 			grafo_aux[i][1][aux]=new Array();
 			grafo_aux[i][1][aux][0]=-2;//ID del punto ingresado por el usuario, es generico
 			grafo_aux[i][1][aux][1]=0;//Peso para ir del nodo al punto ingresado por el usuario, no es relevante
-			console.log(grafo_aux);
+			//console.log(grafo_aux);
 			}
 	}
-	console.log("GRAFO_PI:sali");
+	//console.log("GRAFO_PI:sali");
 	return grafo_aux;
 }
 //****retorna la distancia entre 2 puntos
@@ -496,11 +562,12 @@ return result;
 //****Retorna la ruta al estacionamiento (sin parsear)
 function volver_estacionamiento(coord_punto,adyacentes_actual,grafo,grafo_posiciones)
 {
+var aux=grafo_pos_punto_ruta(grafo_posiciones,data.nodos.etiquetas);
 var ruta=new Array();
-console.log("VOLVER:entre");
-var id=nodo_distancia_menor(coord_punto,grafo_posiciones);
-console.log("Pepe la lleva");
-ruta=obtener_ruta(1,[id],adyacentes_actual,grafo_pi(grafo,grafo_posiciones,coord_punto));
+//console.log("VOLVER:entre");
+var id=nodo_distancia_menor(coord_punto,aux);
+//console.log("Pepe la lleva");
+ruta=obtener_ruta(1,[id],adyacentes_actual,grafo_pi(grafo,aux,coord_punto));
 ruta.push(-2);
 return ruta;
 }
@@ -524,15 +591,15 @@ var guardado=0;
 	for(var i=1;i<tam_ruta;i++)//recorremos cada nodo de la ruta
 	{
 		guardado=0;
-		console.log("revisando elemento "+i+" con excedente "+excedente);
+		//console.log("revisando elemento "+i+" con excedente "+excedente);
 		for(var j=0;j<tam_puntos_transicion;j++)//revisamos si el nodo actual es un nodo de transicion
 		{
-			console.log("ruta["+i+"]==puntos_transicion["+j+"][0]");
-			console.log(ruta[i]+"=="+puntos_transicion[j][0]);
+			//console.log("ruta["+i+"]==puntos_transicion["+j+"][0]");
+			//console.log(ruta[i]+"=="+puntos_transicion[j][0]);
 			if(ruta[i]==puntos_transicion[j][0])//si estamos en un punto de transicion
 			{	
-				console.log("piso_actual==puntos_transicion["+j+"][1]");
-				console.log(piso_actual+"=="+puntos_transicion[j][1]);
+				//console.log("piso_actual==puntos_transicion["+j+"][1]");
+				//console.log(piso_actual+"=="+puntos_transicion[j][1]);
 				if(piso_actual==puntos_transicion[j][1])//si el punto de transicion esta en en mismo piso
 				{
 				rutas_por_piso[indice][i-excedente]=ruta[i];//guardamos la ruta en el primer parseo
@@ -545,10 +612,10 @@ var guardado=0;
 				rutas_por_piso[indice]=new Array();
 				excedente=i;
 				rutas_por_piso[indice][i-excedente]=ruta[i];//guardamos la ruta
-				console.log("guardo la ruta");
+				//console.log("guardo la ruta");
 				piso_actual=puntos_transicion[j][1];
 				j=tam_puntos_transicion;
-				console.log("paso de aqui???");
+				//console.log("paso de aqui???");
 				guardado=1;
 				}
 			}

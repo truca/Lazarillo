@@ -17,6 +17,8 @@
     data.geolocalizar = false;
     data.id_tienda_descripcion = -1;
     data.idioma = "Castellano";
+    data.redraw = false;
+    data.setEstacionamiento = false;
 
     function toggleDescripcion(){
         $(".screen").addClass("inv");
